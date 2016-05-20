@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryMVC", "LibraryMVC\LibraryMVC.csproj", "{ABE190BE-8442-42C9-820E-6FFE630192D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDataService", "LibraryDataService\LibraryDataService.csproj", "{B8DF88F0-0673-4B2B-B078-D38DC8559B8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABE190BE-8442-42C9-820E-6FFE630192D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABE190BE-8442-42C9-820E-6FFE630192D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABE190BE-8442-42C9-820E-6FFE630192D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABE190BE-8442-42C9-820E-6FFE630192D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8DF88F0-0673-4B2B-B078-D38DC8559B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8DF88F0-0673-4B2B-B078-D38DC8559B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8DF88F0-0673-4B2B-B078-D38DC8559B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8DF88F0-0673-4B2B-B078-D38DC8559B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
