@@ -16,7 +16,7 @@ namespace LibraryDataService
         public LibraryDbContext()
             : base("name=LibraryDbContext")
         {
-            
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<LibraryDbContext>());
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
@@ -24,5 +24,6 @@ namespace LibraryDataService
 
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Writer> Writers { get; set; }
+        public virtual DbSet<Hit> Hits { get; set; }
     }
 }

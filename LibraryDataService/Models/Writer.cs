@@ -10,7 +10,9 @@ namespace LibraryDataService.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         public virtual List<Book> Books { get; set; }
