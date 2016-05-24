@@ -15,7 +15,7 @@ namespace LibraryMVC.Controllers
         static IWritersRepository _writersRepository;
         static IBooksRepository _booksRepository;
 
-        static LibraryController()
+        public LibraryController()
         {
             LibraryDbContext libraryDbContext = new LibraryDbContext();
             _writersRepository = new WritersEFRepository(libraryDbContext);
@@ -86,7 +86,7 @@ namespace LibraryMVC.Controllers
             List<SelectListItem> writers = new List<SelectListItem>();
             foreach (var writer in _writersRepository.GetAll())
             {
-                writers.Add(new SelectListItem { Text = writer.Id.ToString(), Value = writer.Id.ToString() });
+                writers.Add(new SelectListItem { Text = writer.Name.ToString(), Value = writer.Id.ToString() });
             }
             ViewBag.Writers = writers;
             return View();
