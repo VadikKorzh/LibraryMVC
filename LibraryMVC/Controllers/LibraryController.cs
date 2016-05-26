@@ -41,9 +41,17 @@ namespace LibraryMVC.Controllers
         }
 
         // GET: Library
+        [OutputCache(Duration = 240, Location = System.Web.UI.OutputCacheLocation.Server)]
         public ActionResult Index()
         {
             return View(_booksRepository.GetAll());
+        }
+
+        public ActionResult IndexClearCache()
+        {
+            string path = Url.Action("Index", "Library");
+            Response.RemoveOutputCacheItem(path);
+            return RedirectToAction("Index");
         }
 
         // GET: Library/Details/5

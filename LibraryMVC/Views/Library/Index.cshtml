@@ -7,12 +7,22 @@
 <p>
     &real;
     @Html.ActionLink("Create new writer   ", "CreateWriter")
-&nbsp; &copy;  
-@Html.ActionLink("Create new book ", "CreateBook")
+    &nbsp; &copy;
+    @Html.ActionLink("Create new book ", "CreateBook")
 </p>
-<div id="MyChart">
 
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="MyChart">
+            </div>
+        </div>
+    </div>
 </div>
+
+@*<div id="MyChart">
+</div>*@
+
 <table class="table">
     <tr>
         <th>
@@ -43,12 +53,17 @@
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
-                <a href="javascript:void(0);" class="chart-btn" data-id="@item.Id">Chart</a>
+                <a href="javascript:void(0);" class="chart-btn" data-id="@item.Id" data-toggle="modal" data-target="#myModal">Chart</a>
             </td>
         </tr>
     }
 
 </table>
+<p>
+    Page is built at @DateTime.Now.ToLongTimeString()
+    @Html.ActionLink("Clear cache", "IndexClearCache")
+</p>
+
 
 @section Scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -81,7 +96,7 @@
                     type: "GET",
                     url: "/api/charts/hits/" + id,
                     content: 'application/json',
-                    beforeSend: function(){
+                    beforeSend: function () {
                         $.blockUI({
                             message: 'loading data'
                         });
@@ -103,7 +118,11 @@
         $(document).ready(function () {
             $('.chart-btn').click(function () {
                 var id = $(this).data('id');
-                drawBackgroundColor(id);
+                $('#myModal').on('shown.bs.modal', function () {
+                    drawBackgroundColor(id);
+                })
+                
+                
             })
         })
     </script>
