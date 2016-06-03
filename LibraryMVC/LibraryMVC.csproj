@@ -132,6 +132,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\VirtualMachineNL.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Google.DataTable.Net.Wrapper.XML" />
     <Content Include="Scripts\bootstrap.js" />
@@ -144,7 +145,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Library\Index.cshtml" />
     <Content Include="Views\Library\CreateWriter.cshtml" />
   </ItemGroup>
@@ -166,9 +169,12 @@
     <Content Include="Views\Library\CreateBook.cshtml" />
     <Content Include="Views\Shared\_SuperStyle.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Library\Delete.cshtml" />
-    <Content Include="Views\Library\Edit.cshtml" />
-    <Content Include="Views\Library\Details.cshtml" />
+    <Content Include="Views\Library\DeleteBook.cshtml" />
+    <Content Include="Views\Library\EditBook.cshtml" />
+    <Content Include="Views\Library\BookDetails.cshtml" />
+    <Content Include="Views\Library\IndexWriters.cshtml" />
+    <Content Include="Views\Library\EditWriter.cshtml" />
+    <Content Include="Views\Library\DeleteWriter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

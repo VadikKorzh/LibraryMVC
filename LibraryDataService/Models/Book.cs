@@ -17,6 +17,9 @@ namespace LibraryDataService.Models
         [StringLength(100, MinimumLength = 2)]
         public string Title { get; set; }
 
+        //[RegularExpression(@"^ISBN\s(?=[-0 - 9xX]{13}$)(?:[0-9]+[- ]){3}[0-9]*[xX0 - 9]$]")]
+        [RegularExpression(@"(ISBN[-]*(1[03])*[ ]*(: ){0,1})*(([0-9Xx][- ]*){13}|([0-9Xx][- ]*){10})",
+            ErrorMessage = "The ISBN is not correct. (Samples: 1121241241241 (13 digits), ISBN 1-56389-668-0)")]
         public string ISBN { get; set; }
 
         public virtual Writer Author { get; set; }

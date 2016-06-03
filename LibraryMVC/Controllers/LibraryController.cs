@@ -12,17 +12,14 @@ namespace LibraryMVC.Controllers
 {
     public class LibraryController : Controller
     {
-        static IWritersRepository _writersRepository;
-        static IBooksRepository _booksRepository;
+        private LibraryUnitOfWork _library;
 
         public LibraryController()
         {
-            LibraryDbContext libraryDbContext = new LibraryDbContext();
-            _writersRepository = new WritersEFRepository(libraryDbContext);
-            _booksRepository = new BooksEFRepository(libraryDbContext);
+            _library = new LibraryUnitOfWork();
 
             Random rnd = new Random((int)DateTime.Now.Ticks);
-            foreach (var book in _booksRepository.GetAll())
+            foreach (var book in _library.BookRepository.GetAll())
             {
                 if (book.Hits.Count == 0)
                 {
@@ -36,15 +33,14 @@ namespace LibraryMVC.Controllers
                     book.Hits.Add(new Hit { Date = DateTime.UtcNow.Date.AddDays(-7), Count = rnd.Next(1, 200) });
                 }
             }
-            _booksRepository.SubmitChanges();
-
+            _library.Save();
         }
 
         // GET: Library
         [OutputCache(Duration = 240, Location = System.Web.UI.OutputCacheLocation.Server)]
         public ActionResult Index()
         {
-            return View(_booksRepository.GetAll());
+            return View(_library.BookRepository.GetAll());
         }
 
         public ActionResult IndexClearCache()
@@ -54,12 +50,17 @@ namespace LibraryMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Library/Details/5
-        public ActionResult Details(int id)
+        public ActionResult IndexWriters()
         {
-            Book book = _booksRepository.GetById(id);
+            return View(_library.WriterRepository.GetAll());
+        }
+
+        // GET: Library/Details/5
+        public ActionResult BookDetails(int id)
+        {
+            Book book = _library.BookRepository.Get(id);
             book.AddHit();
-            _booksRepository.SubmitChanges();
+            _library.Save();
             return View(book);
         }
 
@@ -78,9 +79,9 @@ namespace LibraryMVC.Controllers
                 // TODO: Add insert logic here
                 //libraryDbContext.Writers.Add(writer);
                 //libraryDbContext.SaveChanges();
-                _writersRepository.AddWriter(writer);
-                _writersRepository.SubmitChanges();
-                return RedirectToAction("Index");
+                _library.WriterRepository.Add(writer);
+                _library.Save();
+                return RedirectToAction("IndexWriters");
             }
             catch
             {
@@ -92,7 +93,7 @@ namespace LibraryMVC.Controllers
         public ActionResult CreateBook()
         {
             List<SelectListItem> writers = new List<SelectListItem>();
-            foreach (var writer in _writersRepository.GetAll())
+            foreach (var writer in _library.WriterRepository.GetAll())
             {
                 writers.Add(new SelectListItem { Text = writer.Name.ToString(), Value = writer.Id.ToString() });
             }
@@ -106,11 +107,17 @@ namespace LibraryMVC.Controllers
         {
             try
             {
+                List<SelectListItem> writers = new List<SelectListItem>();
+                foreach (var writer in _library.WriterRepository.GetAll())
+                {
+                    writers.Add(new SelectListItem { Text = writer.Name.ToString(), Value = writer.Id.ToString() });
+                }
+                ViewBag.Writers = writers;
                 // TODO: Add insert logic here
                 //libraryDbContext.Writers.Add(writer);
                 //libraryDbContext.SaveChanges();
-                _booksRepository.AddBook(book);
-                _booksRepository.SubmitChanges();
+                _library.BookRepository.Add(book);
+                _library.Save();
                 return RedirectToAction("Index");
             }
             catch
@@ -120,29 +127,35 @@ namespace LibraryMVC.Controllers
         }
 
         // GET: Library/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditBook(int id)
         {
             List<SelectListItem> writers = new List<SelectListItem>();
-            foreach (var writer in _writersRepository.GetAll())
+            foreach (var writer in _library.WriterRepository.GetAll())
             {
                 writers.Add(new SelectListItem { Text = writer.Name.ToString(), Value = writer.Id.ToString() });
             }
             ViewBag.Writers = writers;
-            return View(_booksRepository.GetById(id));
+            return View(_library.BookRepository.Get(id));
         }
 
         // POST: Library/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Book book)
+        public ActionResult EditBook(int id, Book book)
         {
             try
             {
+                List<SelectListItem> writers = new List<SelectListItem>();
+                foreach (var writer in _library.WriterRepository.GetAll())
+                {
+                    writers.Add(new SelectListItem { Text = writer.Name.ToString(), Value = writer.Id.ToString() });
+                }
+                ViewBag.Writers = writers;
                 // TODO: Add update logic here
-                Book bookToEdit = _booksRepository.GetById(id);
+                Book bookToEdit = _library.BookRepository.Get(id);
                 bookToEdit.AuthorId = book.AuthorId;
                 bookToEdit.ISBN = book.ISBN;
                 bookToEdit.Title = book.Title;
-                _booksRepository.SubmitChanges();
+                _library.Save();
                 return RedirectToAction("Index");
             }
             catch
@@ -152,23 +165,62 @@ namespace LibraryMVC.Controllers
         }
 
         // GET: Library/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeleteBook(int id)
         {
-            return View(_booksRepository.GetById(id));
+            return View(_library.BookRepository.Get(id));
         }
 
         // POST: Library/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult DeleteBook(int id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                _booksRepository.RemoveBook(id);
-                _booksRepository.SubmitChanges();
+                _library.BookRepository.Remove(id);
+                _library.Save();
                 return RedirectToAction("Index");
             }
             catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult EditWriter(int id)
+        {
+            return View(_library.WriterRepository.Get(id));
+        }
+        [HttpPost]
+        public ActionResult EditWriter(int id, Writer writer)
+        {
+            try
+            {
+                Writer writerToUpdate = _library.WriterRepository.Get(id);
+                writerToUpdate.Name = writer.Name;
+                _library.Save();
+                return RedirectToAction("IndexWriters");
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult DeleteWriter(int id)
+        {
+            return View(_library.WriterRepository.Get(id));
+        }
+        [HttpPost]
+        public ActionResult DeleteWriter(int id, Writer writer)
+        {
+            try
+            {
+                _library.WriterRepository.Remove(id);
+                _library.Save();
+                return RedirectToAction("IndexWriters");
+            }
+            catch (Exception)
             {
                 return View();
             }

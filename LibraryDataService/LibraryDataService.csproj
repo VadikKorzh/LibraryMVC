@@ -60,9 +60,13 @@
     <Compile Include="Models\Hit.cs" />
     <Compile Include="Models\Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BookEFRepository.cs" />
     <Compile Include="Repositories\IBooksRepository.cs" />
     <Compile Include="Repositories\BooksEFRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IWritersRepository.cs" />
+    <Compile Include="Repositories\LibraryUnitOfWork.cs" />
+    <Compile Include="Repositories\WriterEFRepository.cs" />
     <Compile Include="Repositories\WritersEFRepository.cs" />
   </ItemGroup>
   <ItemGroup>

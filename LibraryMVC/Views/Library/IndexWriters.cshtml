@@ -1,0 +1,33 @@
+﻿@model IEnumerable<LibraryDataService.Models.Writer>
+
+@{
+    ViewBag.Title = "KRZHK Library - Writers";
+}
+
+<h2>Writers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateWriter")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditWriter", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "DeleteWriter", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+@Html.ActionLink("Back to Library", "Index")

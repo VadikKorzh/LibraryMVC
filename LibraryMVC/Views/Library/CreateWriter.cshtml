@@ -1,13 +1,13 @@
 ﻿@model LibraryDataService.Models.Writer
     @{
-        ViewBag.Title = "Create new writer";
+        ViewBag.Title = "KRZHK Library - Create new writer";
     }
     @using (Html.BeginForm()) 
     {
         @Html.AntiForgeryToken()
         
         <div class="form-horizontal">
-            <h1>Writer</h1>
+            <h1>Create new writer</h1>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
@@ -27,5 +27,5 @@
     }
     
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to Writers", "IndexWriters")
     </div>
