@@ -9,34 +9,34 @@ namespace LibraryDataService.Repositories
 {
     public class BookEFRepository : IRepository<Book>
     {
-        LibraryDbContext context;
+        LibraryDbContext _context;
 
         public BookEFRepository(LibraryDbContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         public Book Get(int id)
         {
-            return context.Books.FirstOrDefault(b => b.Id == id);
+            return _context.Books.FirstOrDefault(b => b.Id == id);
         }
 
         public IEnumerable<Book> GetAll()
         {
-            return context.Books;
+            return _context.Books;
         }
 
         public void Add(Book bookToAdd)
         {
-            context.Books.Add(bookToAdd);
+            _context.Books.Add(bookToAdd);
         }
 
         public void Remove(int id)
         {
-            Book book = context.Books.FirstOrDefault(b => b.Id == id);
+            Book book = _context.Books.FirstOrDefault(b => b.Id == id);
             if (book != null)
             {
-                context.Books.Remove(book);
+                _context.Books.Remove(book);
             }
         }
     }

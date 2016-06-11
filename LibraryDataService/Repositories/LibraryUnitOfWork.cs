@@ -1,23 +1,25 @@
 ﻿using LibraryDataService.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LibraryDataService.Repositories
 {
-    public class LibraryUnitOfWork : IDisposable
+    public class LibraryUnitOfWork : IUnitOfWork, IDisposable
     {
-        LibraryDbContext _dbContext = new LibraryDbContext();
+        LibraryDbContext _dbContext;
         IRepository<Book> _bookRepository;
         IRepository<Writer> _writerRepository;
 
-        //public LibraryUnitOfWork(IRepository<Book> bookRepository, IRepository<Writer> writerRepository)
-        //{
-        //    _bookRepository = bookRepository;
-        //    _writerRepository = writerRepository;
-        //}
+        public LibraryUnitOfWork(LibraryDbContext dbContext, IRepository<Book> bookRepository, IRepository<Writer> writerRepository)
+        {
+            _dbContext = dbContext;
+            _bookRepository = bookRepository;
+            _writerRepository = writerRepository;
+        }
 
         public IRepository<Writer> WriterRepository
         {
@@ -35,14 +37,15 @@ namespace LibraryDataService.Repositories
             }
         }
 
-        public LibraryUnitOfWork()
-        {
-            _bookRepository = new BookEFRepository(_dbContext);
-            _writerRepository = new WriterEFRepository(_dbContext);
-        }
+        //public LibraryUnitOfWork()
+        //{
+        //    _bookRepository = new BookEFRepository(_dbContext);
+        //    _writerRepository = new WriterEFRepository(_dbContext);
+        //}
 
         public void Save()
         {
+            
             _dbContext.SaveChanges();
         }
 

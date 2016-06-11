@@ -12,11 +12,12 @@ namespace LibraryMVC.Controllers
 {
     public class LibraryController : Controller
     {
-        private LibraryUnitOfWork _library;
+        //private LibraryUnitOfWork _library;
+        private IUnitOfWork _library;
 
-        public LibraryController()
+        public LibraryController(IUnitOfWork library)
         {
-            _library = new LibraryUnitOfWork();
+            _library = library;
 
             Random rnd = new Random((int)DateTime.Now.Ticks);
             foreach (var book in _library.BookRepository.GetAll())

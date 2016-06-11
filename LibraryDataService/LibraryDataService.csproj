@@ -64,6 +64,7 @@
     <Compile Include="Repositories\IBooksRepository.cs" />
     <Compile Include="Repositories\BooksEFRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\IWritersRepository.cs" />
     <Compile Include="Repositories\LibraryUnitOfWork.cs" />
     <Compile Include="Repositories\WriterEFRepository.cs" />

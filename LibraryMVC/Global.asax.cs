@@ -7,6 +7,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using LibraryMVC.Infrastructure;
 
 namespace LibraryMVC
 {
@@ -16,6 +17,7 @@ namespace LibraryMVC
         {
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
+            DependencyResolver.SetResolver(new NinjectDependencyResolver());
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);            
         }

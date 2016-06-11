@@ -9,34 +9,34 @@ namespace LibraryDataService.Repositories
 {
     public class WriterEFRepository : IRepository<Writer>
     {
-        LibraryDbContext context;
+        LibraryDbContext _context;
 
         public WriterEFRepository(LibraryDbContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         public Writer Get(int id)
         {
-            return context.Writers.FirstOrDefault(b => b.Id == id);
+            return _context.Writers.FirstOrDefault(b => b.Id == id);
         }
 
         public IEnumerable<Writer> GetAll()
         {
-            return context.Writers;
+            return _context.Writers;
         }
 
         public void Add(Writer writerToAdd)
         {
-            context.Writers.Add(writerToAdd);
+            _context.Writers.Add(writerToAdd);
         }
 
         public void Remove(int id)
         {
-            Writer writer = context.Writers.FirstOrDefault(b => b.Id == id);
+            Writer writer = _context.Writers.FirstOrDefault(b => b.Id == id);
             if (writer != null)
             {
-                context.Writers.Remove(writer);
+                _context.Writers.Remove(writer);
             }
         }
     }
